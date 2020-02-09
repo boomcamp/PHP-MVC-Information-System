@@ -47,11 +47,11 @@ Create Page:
 
 Update Page:
 
-![Update Students](screenshots/create-students.png)
+![Update Students](screenshots/update-students.png)
 
 Delete Page:
 
-![Delete Page](screenshots/create-students.png)
+![Delete Page](screenshots/delete-students.png)
 
 
 ## The views and scripts
