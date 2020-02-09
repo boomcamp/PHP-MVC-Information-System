@@ -35,7 +35,7 @@ public function __construct()
 
 ## Screenshots
 
-Here are the example of complete template that you need to complete there functionalities:
+Here are the example of forms that you need to complete the functionalities:
 
 Login/Exit System Page:
 
