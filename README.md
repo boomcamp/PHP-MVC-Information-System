@@ -1,17 +1,17 @@
 <h1 id="isystem">MVC - Information System (Graded activity)</h1>
 
-This is your first codeigniter activity in which you are going to complete the missing functionalities of our `isystem` below are the important parts that you should aware of in codeigniter:
+This is your first codeigniter activity in which you are going to complete the `missing functionalities` of our `isystem` below are the important parts that you should aware of in codeigniter:
 
 
-## The routes
+## Routes
 
 It's always necessary to add a readable format in your application's url the basic segments in codeigniter is `hostname/controller/function/parameter1/parameter2`
 
-## The model
+## Model
 
 Codeigniter models holds data layer and business logic of your application  `isystem/application/Imodel.php`
 
-## The Controller
+## Controller
 
 Controller holds all the system process example of that is login/logout process `isystem/application/Icontroller.php`
 
