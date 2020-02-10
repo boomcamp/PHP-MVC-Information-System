@@ -1,4 +1,4 @@
-<h1 id="isystem">MVC - Information System (Graded activity)</h1>
+<h1 id="isystem">MVC - Information System </h1>
 
 This is your first MVC activity in which you are going to complete the `missing functionalities` of our `isystem` below are the important parts that you should aware of in codeigniter:
 
