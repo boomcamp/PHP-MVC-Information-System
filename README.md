@@ -74,7 +74,7 @@ Codeiniter support templating and it is located under the `views` folder.
 
 # The Initial SetUp
 
-In order to run the application you need to configure the `url segment`, `database connection` and proper `url segments`.
+In order to run the application you need to configure the `url segment` and`database connection` accordingly.
 
 1.) Download codeigniter and extract it inside your `/opt/lampp/htdocs` folder then rename it as `isystem`
 
