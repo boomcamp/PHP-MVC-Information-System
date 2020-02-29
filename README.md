@@ -873,6 +873,24 @@ function emptyArray($obj)
  
 </details>
 
+# Requirements
+
+* A way to login and logout.
+
+* A way to CREATE new students.
+
+* A way to UPDATE existing students.
+
+* A way to DELETE a student.
+
+* A way to DISPLAY lists of students.
+
+* System should destroy all sessions.
+
+* System should `redirect to login page` if session is NOT present.
+
+* All forms should be validated and display in a form of toast message.
+
 
 # Finished
 
