@@ -549,7 +549,7 @@ class Icontroller extends CI_Controller {
 
 	/************************************************
 	************************************************
-	* 			COMPLETE THE CODE BELOW..
+	*  COMPLETE THE CODE FUNCTIONALITIES BELOW..
 	* **********************************************
 	***********************************************/
 
@@ -558,7 +558,7 @@ class Icontroller extends CI_Controller {
 	 */
     public function dashboard()
     {
-    	//Create function that will login page if session is not present.
+    	# Create function that will redirect to login page if session is not present
     	
     	$data['students'] = $this->Imodel->get_students();
     	$data['course'] = $this->Imodel->get_course();
@@ -573,11 +573,15 @@ class Icontroller extends CI_Controller {
      */
     public function processLogin()
     {
-    	# Session: https://codeigniter.com/user_guide/libraries/sessions.html#using-the-session-class
- 		//use function $this->Imodel->roleExist() from Imodel to check if username and password is match from the database
- 		//IF response is equal to 1 use ouput_to_json([ "message" => "Login success!"]) to display the message
- 		//use codeigniter session or cookie to store login credentials  then redirect to dashboard
- 		//ELSE display ouput_to_json([ "message" => "Login failed!"])
+    	# Session documentation : https://codeigniter.com/user_guide/libraries/sessions.html#using-the-session-class
+ 		
+        # use function $this->Imodel->roleExist() from Imodel to check if username and password is match from the database
+        
+ 		# if response is equal to 1 use ouput_to_json([ "message" => "Login success!"]) to display the message
+        
+ 		# use codeigniter session or cookie to store login credentials  then redirect to dashboard
+    
+ 		# otherwise display ouput_to_json([ "message" => "Login failed!"])
  		
 
  		redirect(base_url('dashboard'), 'refresh');
@@ -588,8 +592,9 @@ class Icontroller extends CI_Controller {
      */
     public function processLogout()
     {
-    	# Session: https://codeigniter.com/user_guide/libraries/sessions.html#using-the-session-class
-    	//Destroy all CI sessions from system
+    	# Session documentation : https://codeigniter.com/user_guide/libraries/sessions.html#using-the-session-class
+        
+    	# Destroy all CI sessions from system
     	
     	redirect(base_url("home"), 'refresh');
     }
@@ -600,8 +605,9 @@ class Icontroller extends CI_Controller {
     public function createStudents()
     {
 
-    	//Call model $this->Imodel->create_students(); to insert student details
-    	//Display ouput_to_json([ "message" => "Student created"]) to inform that new record was inserted
+    	# Call model $this->Imodel->create_students(); to insert student details
+    	
+        # Display ouput_to_json([ "message" => "Student created"]) to inform that new student was successfully inserted
     	
     	redirect(base_url('dashboard'), 'refresh');
     }
@@ -612,8 +618,9 @@ class Icontroller extends CI_Controller {
     public function updateStudents()
     {
 
-    	//Call model $this->Imodel->update_students(); to update student details
-    	//Display ouput_to_json([ "message" => "Update success"]) to inform the updates
+    	# Call model $this->Imodel->update_students(); to update student details
+        
+    	# Display ouput_to_json([ "message" => "Update success"]) to inform the updates
     	
     	redirect(base_url('dashboard'), 'refresh');
     }
@@ -621,12 +628,14 @@ class Icontroller extends CI_Controller {
     public function deleteStudents()
     {
 
-    	//Call model $this->Imodel->delete_students(); to delete student details
-    	//Display ouput_to_json([ "message" => "Update success"]) to inform the updates
+    	# Call model $this->Imodel->delete_students(); to delete student details
+    	
+        # Display ouput_to_json([ "message" => "Update success"]) to inform the updates
     	
     	redirect(base_url('dashboard'), 'refresh');
     }
 }
+
 
 
 ```
@@ -673,31 +682,35 @@ class Imodel extends CI_Model{
         return $this->db->get()->result();
     }
 
-    /**
-     *  PLEASE COMPLETE THE CODE BELOW AND ADD PROPER RETURN TYPE 
-     */
-    
+
+    /************************************************
+    ************************************************
+    *  COMPLETE THE CODE BELOW AND ADD PROPER RETURN TYPE (?)
+    * **********************************************
+    ***********************************************/
 
     public function add_students()
     {    
-        //Insert query here..
-        //https://codeigniter.com/user_guide/database/query_builder.html#inserting-data
+        # Insert query here..
+        
+        # Insert Documentation: https://codeigniter.com/user_guide/database/query_builder.html#inserting-data
     }
 
     public function update_students()
     {    
-        //Update query here..
-        //https://codeigniter.com/user_guide/database/query_builder.html#updating-data
+        # Update query here..
+        
+        # Update Documentation: https://codeigniter.com/user_guide/database/query_builder.html#updating-data
     }
 
     public function delete_students()
     {
-        //Delete query here..
-        //https://codeigniter.com/user_guide/database/query_builder.html#deleting-data
+        # Delete query here..
+        
+        # https://codeigniter.com/user_guide/database/query_builder.html#deleting-data
     }
 }
 ?>
-
 ```
 
 </details>
