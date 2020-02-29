@@ -704,7 +704,7 @@ class Imodel extends CI_Model{
 
 
 <details>
-<summary>  isystem/application/helpers/isystem_helpers.php </summary>
+<summary>  isystem/application/helpers/isystem_helper.php </summary>
 
 ```
 <?php 
