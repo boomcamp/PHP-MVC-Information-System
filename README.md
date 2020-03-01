@@ -5,74 +5,48 @@ This is your first MVC activity in which you are going to complete the `missing 
 
 ## Routes
 
-It's always necessary to add a readable format in your application's url the basic segments in codeigniter is `hostname/controller/function/parameter1/parameter2`
+It's always necessary to add a readable format in your application's url the basic segments in codeigniter is `hostname/controller/function/parameter1/parameter2` and it is located under `config/routes.php`
+
+## The views and scripts
+
+Codeiniter support templating and it is located under the `views/includes/` and `views/pages/` folder.
+
+## Controller
+
+Controller holds all the system process `isystem/application/Icontroller.php`
 
 ## Model
 
 Codeigniter models holds data layer and business logic of your application  `isystem/application/Imodel.php`
 
-## Controller
-
-Controller holds all the system process example of that is login/logout process `isystem/application/Icontroller.php`
-
 ## Libraries and helpers
 
-Codeigniter supports custom `libraries` and `helpers` it is located under `isytem/application/libraries` and `isytem/application/helpers` and can be loaded inside your controllers `constructor`
+Codeigniter supports custom `libraries` and `helpers` it is located under `isytem/application/libraries` and `isytem/application/helpers` and can be loaded inside your controllers and models `constructor`
 
-Example on how to load helpers
+Example: 
 
 ```
 public function __construct() 
 {
-  parent::__construct();
-  //Message: Call to undefined function base_url()
-  $this->load->helper('url'); 
+	parent::__construct();
 
-  //Message: Call to undefined function ouput_to_json()
-  $this->load->helper('isystem_helper');
+	//Message: Call to undefined function base_url()
+	$this->load->helper('url'); 
+
+	//Message: Call to undefined function ouput_to_json()
+	$this->load->helper('isystem_helper');
+
+	//load model
+	$this->load->model("Imodel");
+
+	//load session
+	$this->load->library('session');
+
 }
 ```
 
-## Screenshots
 
-Here are the example of forms that you need to complete the functionalities:
-
-Login/Exit System Page:
-
-![login png](screenshots/login.png)
-
-Create Page:
-
-![Create Students](screenshots/create-students.png)
-
-Update Page:
-
-![Update Students](screenshots/update-students.png)
-
-Delete Page:
-
-![Delete Page](screenshots/delete-students.png)
-
-
-## The views and scripts
-
-Codeiniter support templating and it is located under the `views` folder.
-
-* `/views/includes/header.php - The page header of the system it includes necessary scripts to be used by the system
-
-* `/views/includes/footer.php - Application footer
-
-* `/views/pages/login.php - The login form of the system
-
-* `/views/pages/list.php - Display all students in a table
-
-* `/views/pages/create.php - The create student form
-
-* `/views/pages/update.php - The update student form
-
-
-
-# The Initial SetUp
+# Setup
 
 In order to run the application you need to configure the `url segment` and`database connection` accordingly.
 
