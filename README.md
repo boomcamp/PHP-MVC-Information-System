@@ -716,9 +716,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Icontroller extends CI_Controller {
 
-	public function __construct() 
+    public function __construct() 
     {
         parent::__construct();
+
         //Message: Call to undefined function base_url()
         $this->load->helper('url'); 
 
@@ -728,6 +729,9 @@ class Icontroller extends CI_Controller {
         //load model
         $this->load->model("Imodel");
 
+        //load session
+        $this->load->library('session');
+
     }
 
     /**
@@ -735,31 +739,40 @@ class Icontroller extends CI_Controller {
      */
     public function index()
     {
-    	$this->load->view("includes/header");
-    	$this->load->view("pages/login");
-    	$this->load->view("includes/footer");
+
+        $this->load->view("includes/header");
+        $this->load->view("pages/login");
+        $this->load->view("includes/footer");
     }
 
 
-	/************************************************
-	************************************************
-	*  COMPLETE THE CODE FUNCTIONALITIES BELOW..
-	* **********************************************
-	***********************************************/
+    /************************************************
+    ************************************************
+    *   COMPLETE THE CODE FUNCTIONALITY FROM PSEUDOCODE
+    * **********************************************
+    ***********************************************/
 
-	/**
-	 * The main page that display student information
-	 */
+    private function checkSession()
+    {
+        # Documentation: https://codeigniter.com/user_guide/libraries/sessions.html?highlight=set_userdata#retrieving-session-data
+        
+        # Check 'logged_in' if NOT (!) present THEN redirect(base_url(), 'refresh');
+    }
+
+    /**
+     * The main page that display student information
+     */
     public function dashboard()
     {
-    	# Create function that will redirect to login page if session is not present
-    	
-    	$data['students'] = $this->Imodel->get_students();
-    	$data['course'] = $this->Imodel->get_course();
+        # Call function checkSession()
+        $this->checkSession();
 
-    	$this->load->view("includes/header");
-    	$this->load->view("pages/list", $data);
-    	$this->load->view("includes/footer");
+        $data['students'] = $this->Imodel->get_students();
+        $data['course'] = $this->Imodel->get_course();
+
+        $this->load->view("includes/header");
+        $this->load->view("pages/list", $data);
+        $this->load->view("includes/footer");
     }
 
     /**
@@ -767,18 +780,43 @@ class Icontroller extends CI_Controller {
      */
     public function processLogin()
     {
-    	# Session documentation : https://codeigniter.com/user_guide/libraries/sessions.html#using-the-session-class
- 		
-        # use function $this->Imodel->roleExist() from Imodel to check if username and password is match from the database
         
- 		# if response is equal to 1 use ouput_to_json([ "message" => "Login success!"]) to display the message
-        
- 		# use codeigniter session or cookie to store login credentials  then redirect to dashboard
-    
- 		# otherwise display ouput_to_json([ "message" => "Login failed!"])
- 		
+        # Assign $this->input->post("username") as $username
+        $username = $this->input->post("username") ?? null;
 
- 		redirect(base_url('dashboard'), 'refresh');
+        # Assign $this->input->post("password") as $password
+        $password = $this->input->post("password") ?? null;
+
+         # IF roleExist($username,$password) and check if ($username and $password) is not equal to (!==) null THEN
+         
+         /**
+          *
+          *  $details = array(
+                    'username'  => $username,
+                    'password'     => $password,
+                    'logged_in' => TRUE
+            );
+
+            $this->session->set_userdata($details);
+
+            ouput_to_json([ 
+                "data" => true,
+                "msg" => "Login Success"
+            ]);
+
+          */
+         
+
+         # ELSE 
+         
+         /**
+          *  ouput_to_json([ 
+                "data" => false,
+                "msg" => "Login failed!"
+            ]);
+          */
+         
+             
     }
 
     /**
@@ -786,11 +824,15 @@ class Icontroller extends CI_Controller {
      */
     public function processLogout()
     {
-    	# Session documentation : https://codeigniter.com/user_guide/libraries/sessions.html#using-the-session-class
+        # https://codeigniter.com/user_guide/libraries/sessions.html?highlight=has_userdata#adding-session-data
         
-    	# Destroy all CI sessions from system
-    	
-    	redirect(base_url("home"), 'refresh');
+        # IF 'logged_in' has_userdata() THEN destroy all sessions 
+        /**
+         * ouput_to_json([ 
+                "data" => false,
+                "msg" => "Logout success"
+            ]);
+         */
     }
 
     /**
@@ -799,11 +841,43 @@ class Icontroller extends CI_Controller {
     public function createStudents()
     {
 
-    	# Call model $this->Imodel->create_students(); to insert student details
-    	
-        # Display ouput_to_json([ "message" => "Student created"]) to inform that new student was successfully inserted
-    	
-    	redirect(base_url('dashboard'), 'refresh');
+        # Call add_students($this->input->post()) 
+        
+        /**
+         * ouput_to_json([ 
+            "data" => true,
+            "msg" => "Student created"
+        ]);
+         */
+    }
+
+    /**
+     * A function that will get student details
+     */
+    public function getStudents()
+    {
+
+        # Assign (int)$this->uri->segment(2); as $user_id
+        $user_id = (int)$this->uri->segment(2);
+
+        # IF $user_id is_numeric
+        # Call Imodel->get_student_by_id($user_id); and assign as $results THEN
+        
+        /**
+         *  ouput_to_json([ 
+                "data" => true,
+                "msg" => $results
+            ]);
+         */
+        
+        # ELSE
+        
+        /**
+         *  ouput_to_json([ 
+                "data" => false,
+                "msg" => "Invalid parameter for user id"
+            ]);
+         */
     }
 
     /**
@@ -812,25 +886,43 @@ class Icontroller extends CI_Controller {
     public function updateStudents()
     {
 
-    	# Call model $this->Imodel->update_students(); to update student details
+        # Call model update_students($this->input->post()); THEN
         
-    	# Display ouput_to_json([ "message" => "Update success"]) to inform the updates
-    	
-    	redirect(base_url('dashboard'), 'refresh');
+        /**
+         *  ouput_to_json([ 
+                "data" => true,
+                "msg" => "Student details updated!"
+            ]);
+         */
     }
 
     public function deleteStudents()
     {
 
-    	# Call model $this->Imodel->delete_students(); to delete student details
-    	
-        # Display ouput_to_json([ "message" => "Update success"]) to inform the updates
-    	
-    	redirect(base_url('dashboard'), 'refresh');
+         # Assign (int)$this->uri->segment(2); as $user_id
+        $user_id = (int)$this->uri->segment(2);
+
+         # IF $user_id is_numeric
+         # Call delete_students($user_id); THEN
+         
+         /**
+          *  ouput_to_json([ 
+                "data" => true,
+                "msg" => "Delete student success"
+             ]);
+          */
+         
+         # ELSE
+         
+         /**
+          *  ouput_to_json([ 
+                "data" => false,
+                "msg" => "Invalid parameter for user id"
+            ]);
+          */
+         
     }
 }
-
-
 
 ```
 
@@ -849,6 +941,8 @@ class Imodel extends CI_Model{
     public function __construct() 
     {
         parent::__construct();
+
+        //Load the database helper
         $this->load->database();
     }
 
@@ -857,7 +951,7 @@ class Imodel extends CI_Model{
         $this->db->where('username',$username);
         $this->db->where('password', sha1($password));
         $query = $this->db->get('users');
-        return $query->num_rows() > 0 ?? false ;
+        return $query->num_rows() > 0 ;
     }
 
     public function get_course() : array
@@ -869,39 +963,113 @@ class Imodel extends CI_Model{
 
     public function get_students() : array
     {
-        $this->db->select('students.id, students.fullname, students.email, students.contact, course.name as course, course.id as course_id');
+        $this->db->select('users.id as user_id, 
+                           users.username as username, 
+                           users.password as password, 
+                           students.id, 
+                           students.fullname, 
+                           students.email, 
+                           students.contact, 
+                           course.name as course, 
+                           course.id as course_id');
+
         $this->db->from('students');
         $this->db->join('users', 'users.id = students.user_id');
         $this->db->join('course', 'course.id = students.course_id');
+        $this->db->order_by('users.id', 'ASC');
+        return $this->db->get()->result();
+    }
+
+    public function get_student_by_id($user_id) : array
+    {
+        $this->db->select('users.id as user_id, 
+                           users.username as username, 
+                           users.password as password, 
+                           students.id, 
+                           students.fullname, 
+                           students.email, 
+                           students.contact, 
+                           course.name as course, 
+                           course.id as course_id');
+        
+        $this->db->from('students');
+        $this->db->join('users', 'users.id = students.user_id');
+        $this->db->join('course', 'course.id = students.course_id');
+        $this->db->where('users.id', $user_id);
         return $this->db->get()->result();
     }
 
 
+
     /************************************************
     ************************************************
-    *  COMPLETE THE CODE BELOW AND ADD PROPER RETURN TYPE (?)
+    *   COMPLETE THE CODEIGNITER QUERIES BELOW
     * **********************************************
     ***********************************************/
 
-    public function add_students()
-    {    
-        # Insert query here..
+    public function add_students($post)
+    {   
+        # Documentation: https://codeigniter.com/userguide3/database/query_builder.html#inserting-data
+        # Documentation last inserted id: https://codeigniter.com/userguide3/database/helpers.html
         
-        # Insert Documentation: https://codeigniter.com/user_guide/database/query_builder.html#inserting-data
+         # Set $users as array of $post['username'] and sha1($post['password'])
+        $users = array(
+                'username' => $post['username'],
+                'password' => sha1($post['password'])
+        );
+
+        # Perform insert for 'users' table for $users array
+        // QUERY HERE..
+
+        # Assign $users as array user_id as $this->db->insert_id(), $post['course'], $post['fullname'], $post['email'] and $post['contact']
+        $users = array(
+                'user_id' => $this->db->insert_id(),
+                'course_id' => $post['course'],
+                'fullname' => $post['fullname'],
+                'email' => $post['email'],
+                'contact' => $post['contact']
+        );
+
+        # Perform insert query for $users array
+        // QUERY HERE..
     }
 
-    public function update_students()
+    public function update_students($post)
     {    
-        # Update query here..
+
+        # Documentation : https://codeigniter.com/user_guide/database/query_builder.html#updating-data
         
-        # Update Documentation: https://codeigniter.com/user_guide/database/query_builder.html#updating-data
+        # Set $users as array of $post['username'] and sha1($post['password'])
+        $users = array(
+                'username' => $post['username'],
+                'password' => sha1($post['password'])
+        );
+
+        # Perform update for `users` table where `id` is equal to $post['user_id']
+        // QUERY HERE..
+
+        # Set $users as array of $post['course_id'], $post['fullname'], $post['email'] and $post['contact']
+        $users = array(
+                'course_id' => $post['course_id'],
+                'fullname' => $post['fullname'],
+                'email' => $post['email'],
+                'contact' => $post['contact']
+        );
+
+        # Perform update for `students` table where `user_id` is equal to $post['user_id']
+        // QUERY HERE..
     }
 
-    public function delete_students()
+    public function delete_students($user_id)
     {
-        # Delete query here..
         
-        # https://codeigniter.com/user_guide/database/query_builder.html#deleting-data
+        # Documentation: https://codeigniter.com/user_guide/database/query_builder.html#deleting-data
+        
+        # Delete users table where `id` is equal to $user_id
+        // QUERY HERE..
+
+        # Delete students table where `user_id` is equal to $user_id
+        // QUERY HERE..
     }
 }
 ?>
