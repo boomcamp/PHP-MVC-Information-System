@@ -23,28 +23,49 @@ Codeigniter models holds data layer and business logic of your application  `isy
 
 Codeigniter supports custom `libraries` and `helpers` it is located under `isytem/application/libraries` and `isytem/application/helpers` and can be loaded inside your controllers and models `constructor`
 
-Example: 
+Example in constructor's controller: 
 
 ```
-public function __construct() 
-{
-	parent::__construct();
+defined('BASEPATH') OR exit('No direct script access allowed');
 
-	//Message: Call to undefined function base_url()
-	$this->load->helper('url'); 
+class Icontroller extends CI_Controller {
 
-	//Message: Call to undefined function ouput_to_json()
-	$this->load->helper('isystem_helper');
+	public function __construct() 
+	{
+		parent::__construct();
 
-	//load model
-	$this->load->model("Imodel");
+		//Message: Call to undefined function base_url()
+		$this->load->helper('url'); 
 
-	//load session
-	$this->load->library('session');
+		//Message: Call to undefined function ouput_to_json()
+		$this->load->helper('isystem_helper');
 
+		//load model
+		$this->load->model("Imodel");
+
+		//load session
+		$this->load->library('session');
+
+	}
 }
 ```
 
+Example in constructor's model:
+
+```
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+class Imodel extends CI_Model{
+    
+    public function __construct() 
+    {
+	parent::__construct();
+
+	//Load the database helper
+	$this->load->database();
+    }
+}
+```
 
 # Setup
 
