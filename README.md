@@ -302,11 +302,22 @@ $db['default'] = array(
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
 
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js"></script>
+
     <script>
 
     	  //base url for the script
     	  var url = "<?php echo base_url(); ?>";
 
+    	  /**
+    	   * Set delay for redirections
+    	   */
+    	  function setDelay(loc)
+    	  {
+    	  	 setTimeout(function(){ 
+    	  	 	location.href = loc
+    	  	 }, 1000);
+    	  }
 
     	  /**
     	   * A function call that will show "Create Students" form
@@ -319,94 +330,125 @@ $db['default'] = array(
 		  /**
     	   * A function call that will show "Update Students" form
     	   */
-		  function showEditForm(student_id,course_id)
+		  function showEditForm(user_id)
 		  {
-		  	$('#updateStudents').modal('show');
-		  	$('select#course_update option[value="'+course_id+'"]').attr("selected",true);
+		  	$('#updateStudents')
+		  	.modal('show');
+		  	
+
+		  	 $.get(url+"get/"+user_id, function(data, status){
+			    $.map(data.msg, function(response) {
+				$('#formUpdate select#course_id option[value="'+response.course_id+'"]')
+				.attr("selected",true);
+		  	
+				  $("#formUpdate #user_id").val(response.user_id);
+				  $("#formUpdate #username").val(response.username);
+				  $("#formUpdate #password").val(response.password);
+				  $("#formUpdate #fullname").val(response.fullname);
+				  $("#formUpdate #email").val(response.email);
+				  $("#formUpdate #contact").val(response.contact);
+				});
+			 });
 		  }
 
 
 		  /************************************************
 		   ************************************************
-		   * 			COMPLETE THE CODE BELOW..
+		   * 	function call for CRUD operations
 		   * **********************************************
 		   ***********************************************/
 		  
 		   /**
 		    * A function call that will allow you to use the Isystem
 		    */
-		  function processLogin(e)
-		  {
+		  function processLogin(e) {
 
-		  	e.preventDefault();
-		  	
-		  	//url  			:   url+"login"
-		  	//controller	:   Icontroller/processLogin
-		  	//message		: 	toastr.info('Login Success!')
-		  	//formdata		: 	$("#loginDetails").serialize();
-		  	
-		  	//Complete with ajax code here..
+		  	e.preventDefault();	
+		  	$.ajax({
+	            url: url+"login",
+	            type: "POST",
+	            data: $("#loginDetails").serialize(),
+	            dataType: "json",
+	            success: function( response ) {
+	                if(response.data == true){
+	                	toastr.info(response.msg);
+	                	setDelay(url+"dashboard")
+	                }else{
+	                	toastr.info(response.msg);
+	                }
+	            }
+          	});
 		  }
 
 		  /**
 		   * A function call that will exit users from system
 		   */
-		  function processLogout()
-		  {
-
-		  	//url  			:   url+"logout"
-		  	//controller	:   Icontroller/processLogout
-		  	//message		: 	toastr.info('Loging out..')
-		  	
-		  	//Complete with ajax code here..
+		  function processLogout() {
+		  	$.ajax({
+	            url: url+"logout",
+	            type: "POST",
+	            data: $("#loginDetails").serialize(),
+	            dataType: "json",
+	            success: function( response ) {
+	                if(response.data == false){
+	                	toastr.info(response.msg);
+	                	setDelay(url)
+	                }
+	            }
+          	});
 		  }
 
 		  /**
 		   * A function call that will create new student information in database
 		   */
-		  function createStudents(e)
-		  {
+		  function createStudents(e) {
 
 		  	e.preventDefault();
-
-		  	//url  			:   url+"create"
-		  	//controller	:   Icontroller/createStudents
-		  	//message		: 	toastr.info('Student successfully added!')
-		  	//formdata		: 	$("#formCreate").serialize();
 		  	
-		  	//Complete with ajax code here..
+		  	$.ajax({
+	            url: url+"create",
+	            type: "POST",
+	            data: $("#formCreate").serialize(),
+	            dataType: "json",
+	            success: function( response ) {
+	                if(response.data == true){
+	                	toastr.info(response.msg);
+	                	setDelay(url+"dashboard")
+	                }
+	            }
+          	});
 		  }
 
 		  /**
 		   *  A function call that will update existing student information
 		   */
-		  function updateStudents(e)
-		  {
-
+		  function updateStudents(e) {
 		  	e.preventDefault();
-
-		  	//url  			:   url+"update"
-		  	//controller	:   Icontroller/updateStudents
-		  	//message		: 	toastr.info('Student successfully updated')
-		  	//formdata		: 	$("#formUpdate").serialize();
 		  	
-		  	//Complete with ajax code here..
+		  	$.ajax({
+	            url: url+"update",
+	            type: "POST",
+	            data: $("#formUpdate").serialize(),
+	            dataType: "json",
+	            success: function( response ) {
+	                if(response.data == true){
+	                	toastr.info(response.msg);
+	                	setDelay(url+"dashboard")
+	                }
+	            }
+          	});
 		  }
+
 
 		  /**
 		   * A function call that will remove student information in the database
 		   */
-		  function deleteStudents(student_id)
-		  {
-
-		  	//url  			:   url+"delete"
-		  	//controller	:   Icontroller/deleteStudents
-		  	//message		: 	toastr.info('Student successfully deleted')
-		  	//formdata		: 	$("#formUpdate").serialize();
-		  	
-		  	//Complete with ajax code here..
+		  function deleteStudents(user_id) {
+		  	$.post(url+"delete/"+user_id, function(data, status){
+		  		toastr.info(data.msg)
+		  		setDelay(url+"dashboard")
+          	});
 		  }
-
 
 		 
     </script>
@@ -416,7 +458,16 @@ $db['default'] = array(
 <div class="page-header">
   <h1>Boom.Camp - Information System</h1>
 </div>
-<div class="container"> <a style="float:right;">[Exit System]</a> <br>
+<div class="container"> 
+
+<!-- Logout Button -->
+<?php 
+ if($this->session->userdata('logged_in')){
+ 	?>
+ 	<a style="float:right;" href="#" onclick="processLogout();">[Exit System]</a> <br>
+ 	<?php 
+ }
+?>
 ```
 	
 </details>
@@ -469,10 +520,10 @@ $db['default'] = array(
      </div><br><br>
 </div>
 <div class="table-responsive">
-<table class="table table-bordered">
+<table class="table table-bordered" id="students_tbl">
   <thead>
       <tr>
-          <th>EmployeeID</th>
+          <th>Student ID</th>
           <th>Fullname</th>
           <th>Email</th>
           <th>Contact</th>
@@ -489,9 +540,17 @@ $db['default'] = array(
           <td><?php echo $student->contact; ?></td>   
           <td><?php echo $student->course; ?></td>                        
       <td>
-         <a class="btn btn-info btn-xs" onclick="showEditForm('<?php echo $student->id;?>','<?php echo $student->course_id;?>')"><i class="glyphicon glyphicon-pencil"></i>
+         
+         <!-- Edit Action -->
+         <a class="btn btn-info btn-xs" onclick="showEditForm('<?php echo $student->user_id;?>')">
+          <i class="glyphicon glyphicon-pencil"></i>
          </a>
-          <button type="submit" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></button>
+
+         <!-- Delete Action -->
+          <button type="submit" onclick="deleteStudents('<?php echo $student->user_id;?>')" class="btn btn-danger btn-xs">
+            <i class="glyphicon glyphicon-remove"></i>
+          </button>
+
       </td>     
       </tr>
       <?php } ?>
@@ -526,7 +585,7 @@ $this->load->view('pages/update');
             <label for="course">Select Course</label>
             <select class="form-control" id="course" name="course">
               <?php foreach($course as $courses):?>
-                <?php echo "<option>{$courses->name}</option>"; ?>
+                <?php echo "<option value='{$courses->id}'>{$courses->name}</option>"; ?>
               <?php endforeach;?>
             </select>
           </div>
@@ -577,31 +636,35 @@ $this->load->view('pages/update');
         <div class="modal-body">
            <div class="form-group">
             <label for="course">Select Course</label>
-            <select class="form-control" id="course_update" name="course">
+            <select class="form-control" id="course_id" name="course_id">
               <?php foreach($course as $courses):?>
                 <?php echo "<option value='{$courses->id}'>{$courses->name}</option>"; ?>
               <?php endforeach;?>
             </select>
           </div>
           <div class="form-group">
+            <label for="username">User ID</label>
+            <input type="text" readonly=true class="form-control" id="user_id" placeholder="Username" name="user_id">
+          </div>
+          <div class="form-group">
             <label for="username">Username</label>
-            <input type="password" class="form-control" id="username_update" placeholder="Username" name="username">
+            <input type="text" class="form-control" id="username" placeholder="Username" name="username">
           </div>
           <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" class="form-control" id="password_update" placeholder="Password" name="password">
+            <input type="password" class="form-control" id="password" placeholder="Password" name="password">
           </div>
           <div class="form-group">
             <label for="fullname">Fullname</label>
-            <input type="fullname" class="form-control" id="fullname_update" placeholder="Fullname" name="fullname">
+            <input type="text" class="form-control" id="fullname" placeholder="Fullname" name="fullname">
           </div>
           <div class="form-group">
             <label for="email">Email</label>
-            <input type="email" class="form-control" id="email_update" placeholder="Email" name="email">
+            <input type="email" class="form-control" id="email" placeholder="Email" name="email">
           </div>
           <div class="form-group">
             <label for="contact">Contact</label>
-            <input type="contact" class="form-control" id="contact_update" placeholder="Contact" name="contact">
+            <input type="text" class="form-control" id="contact" placeholder="Contact" name="contact">
           </div>
         </div>
         <div class="modal-footer">
@@ -635,8 +698,9 @@ $route["login"] = "Icontroller/processLogin";
 $route["logout"] = "Icontroller/processLogout";
 $route["dashboard"] = "Icontroller/dashboard";
 $route["create"] = "Icontroller/createStudents";
+$route["get/:num"] = "Icontroller/getStudents/$1";
 $route["update"] = "Icontroller/updateStudents";
-$route["delete"] = "Icontroller/deleteStudents";
+$route["delete/:num"] = "Icontroller/deleteStudents/$1";
 ```
 	
 </details>
@@ -889,7 +953,10 @@ function emptyArray($obj)
 
 * System should `redirect to login page` if session is NOT present.
 
-* All forms should be validated and display in a form of toast message.
+
+Optional Task
+
+* All forms should be validated.
 
 
 # Finished
