@@ -1107,15 +1107,15 @@ function emptyArray($obj)
 
 # Requirements
 
-* A way to login and logout.
+* A functionality to login and logout.
 
-* A way to CREATE new students.
+* A functionality to CREATE new students.
 
-* A way to UPDATE existing students.
+* A functionality to UPDATE existing students.
 
-* A way to DELETE a student.
+* A functionality to DELETE a student.
 
-* A way to DISPLAY lists of students.
+* A functionality to DISPLAY lists of students.
 
 * System should destroy all sessions.
 
