@@ -1106,7 +1106,7 @@ function emptyArray($obj)
 
 * A functionality for creating new students.
 
-* A functionality for updateing student details.
+* A functionality for updating student details.
 
 * A functionality for deleting student.
 
