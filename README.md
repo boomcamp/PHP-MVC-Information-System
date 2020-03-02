@@ -101,7 +101,7 @@ RewriteRule ^(.*)$ index.php/$1 [L,QSA]
 
 </details>
 
-4.) Create your database `info_db` in your [phpmyadmin](http://localhost/phpmyadmin).
+4.) Upload `info_db` in [phpmyadmin](http://localhost/phpmyadmin).
 
 <details>
 <summary> info_db </summary>
