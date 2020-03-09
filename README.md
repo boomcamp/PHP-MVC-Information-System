@@ -69,7 +69,7 @@ class Imodel extends CI_Model{
 
 # Setup
 
-In order to run the application you need to configure the `url segment` and`database connection` accordingly.
+In order to run the application you need to configure the `url segment` and`database connection`.
 
 1.) Download codeigniter and extract it inside your `/opt/lampp/htdocs` folder then rename it as `isystem`
 
