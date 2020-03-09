@@ -1,4 +1,4 @@
-<h1 id="isystem">MVC - Information System </h1>
+<h1 id="isystem">Introduction</h1>
 
 This is your first MVC activity in which you are going to complete the `missing functionalities` of our `Icontroller.php` and `Imodel.php` below are the important parts that you should aware of in developing a codeigniter applications:
 
